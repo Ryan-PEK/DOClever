@@ -18,7 +18,6 @@ router.use("/:id",async (validate))
 
 router.use(async (handle))
 
-
 function validate(req,res,next) {
     try
     {
@@ -65,9 +64,39 @@ function validate(req,res,next) {
         {
             query.version=versionId;
         }
+
+        let headerApiName=req.headers["x-apiname"];
+        let headerApiVersion=req.headers["x-apiversion"];
+        if(headerApiName && headerApiVersion){
+            query.param={
+                $elemMatch:{
+                    $and:[
+                        {
+                            "header":{
+                                $elemMatch:{
+                                    "name":"x-apiname",
+                                    "value":headerApiName
+                                }
+                            }
+                        },
+                        {
+                            "header":{
+                                $elemMatch:{
+                                    "name":"x-apiversion",
+                                    "value":headerApiVersion
+                                }
+                            }
+                        }
+                    ]
+                }
+            };
+        }
+
         let objInter=await (req.interfaceModel.findOneAsync(query))
+        // console.log("find one result is "+objInter)
         if(!objInter)
         {
+            util.throw(e.interfaceNotFound,"接口不存在");
             let mockArr=mockUrl.split("/");
             let query={
                 method:req.method,
@@ -128,7 +157,7 @@ function validate(req,res,next) {
 
 function handle(req,res) {
     try
-    {
+    {   
         let param,clientParam,type;
         if(req.obj.method=="GET" || req.obj.method=="DELETE")
         {
@@ -154,6 +183,7 @@ function handle(req,res) {
         {
             let result=param.outInfo.jsonType==1?[]:{};
             util.convertToJSON(param.outParam,result,info);
+            console.log("handle if: "+result)
             res.json(result);
         }
         else

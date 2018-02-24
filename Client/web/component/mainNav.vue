@@ -3,18 +3,13 @@
         <div class="wrap">
             <div style="padding:0 15px">
                 <div class="logo fl"><a href="/"><img src="../../web/resource/pic/logo.png"></a></div>
-                <ul class="fl nav">
-                    <li><a href="../download/download.html" >线下部署</a></li>
+<!--                 <ul class="fl nav">
                     <li><a href="../help/help.html" target="_blank">帮助文档</a></li>
-                    <li ><a href="../about/about.html" >关于我们</a></li>
-                    <li ><a href="../join/join.html" >加入我们</a></li>
-                    <li><a href="../donate/donate.html" style="color: #00adef">桌面端众筹</a></li>
-                </ul>
+                </ul> -->
                 <template v-if="!session.id">
                     <div class="login fr">
                         <ul>
                             <li><a href="../login/login.html">登录</a></li>
-                            <li class="register"><a href="../register/register.html">立即体验</a></li>
                         </ul>
                     </div>
                 </template>
