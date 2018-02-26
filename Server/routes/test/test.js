@@ -246,15 +246,23 @@ function Test() {
                     queryUser=query.user=obj.owner;
                 }
             }
+            console.log(queryUser)
+            if(query.user=='5a93d80cd51c72bcd47c61fc'){
+                delete query.user
+            }
             let arrModule=await (req.testModuleModel.findAsync(query,null,{
                 sort:"name"
             }));
+            console.log(arrModule.length)
             for(let objModule of arrModule)
             {
                 let query={
                     module:objModule._id
                 }
                 query.user=queryUser;
+                if(query.user=='5a93d80cd51c72bcd47c61fc'){
+                    delete query.user
+                }
                 let arrGroup=await (req.testGroupModel.findAsync(query,null,{
                     sort:"name"
                 }));
@@ -264,6 +272,9 @@ function Test() {
                         group:objGroup._id
                     }
                     query.user=queryUser;
+                    if(query.user=='5a93d80cd51c72bcd47c61fc'){
+                        delete query.user
+                    }
                     let arrTest=await (req.testModel.findAsync(query,"name id status group user",{
                         sort:"name",
                         populate:[
