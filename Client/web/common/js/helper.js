@@ -2141,18 +2141,18 @@ helper.runTest=async function (obj,global,test,root,opt,id) {
             }
         }
     }
-    if(obj.before.mode==0)
-    {
-        if(global.before)
-        {
-            helper.runBefore(global.before,baseUrl,path,method,query,header,body,param)
-        }
-        helper.runBefore(obj.before.code,baseUrl,path,method,query,header,body,param)
-    }
-    else
-    {
-        helper.runBefore(obj.before.code,baseUrl,path,method,query,header,body,param)
-    }
+    // if(obj.before.mode==0)
+    // {
+    //     if(global.before)
+    //     {
+    //         helper.runBefore(global.before,baseUrl,path,method,query,header,body,param)
+    //     }
+    //     helper.runBefore(obj.before.code,baseUrl,path,method,query,header,body,param)
+    // }
+    // else
+    // {
+    //     helper.runBefore(obj.before.code,baseUrl,path,method,query,header,body,param)
+    // }
     if(!obj.pullInject)
     {
         if(opt && opt.param)
@@ -2254,6 +2254,18 @@ helper.runTest=async function (obj,global,test,root,opt,id) {
         {
             path=path.replace("{"+paramKey+"}",param[paramKey])
         }
+    }
+    if(obj.before.mode==0)
+    {
+        if(global.before)
+        {
+            helper.runBefore(global.before,baseUrl,path,method,query,header,body,param)
+        }
+        helper.runBefore(obj.before.code,baseUrl,path,method,query,header,body,param)
+    }
+    else
+    {
+        helper.runBefore(obj.before.code,baseUrl,path,method,query,header,body,param)
     }
     var reqQuery=query;
     query=$.param(query);
